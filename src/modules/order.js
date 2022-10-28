@@ -14,6 +14,16 @@ export default class Order {
         this.items.push(item);
     }
 
+    repr() {
+        this.calculate_totals();
+        let receipt = '';
+        this.items.forEach((item) => {
+            receipt += `${item.repr()}\n`;
+        });
+        receipt += `Sales Taxes: ${this.sales_taxes}\nTotal: ${this.total}`;
+        return receipt;
+    }
+
     calculate_totals() {
         this.sales_taxes = this.sum(this.taxes);
         this.total = this.sum(this.totals);
