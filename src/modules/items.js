@@ -11,4 +11,15 @@ export default class Item {
     repr() {
         return `${this.quantity} ${this.name}: ${this.total}`;
     }
+
+    parse_description(description) {
+        const [qtydesc, price] = description.split(' at ');
+        const imported = 0 || 1*qtydesc.includes('imported');
+        let [qty, , ...name] = qtydesc.split('');
+        name = name.join('');
+        const basic_applies = this.determine_type(name);
+        const quantity = parseInt(qty);
+        const raw_price = quantity * price;
+        return { name, imported, basic_applies, quantity, raw_price };
+    }
 }
