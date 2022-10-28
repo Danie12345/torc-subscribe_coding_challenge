@@ -13,4 +13,13 @@ export default class Order {
         this.totals.push(item.total);
         this.items.push(item);
     }
+
+    calculate_totals() {
+        this.sales_taxes = this.sum(this.taxes);
+        this.total = this.sum(this.totals);
+    }
+
+    sum(arr) {
+        return arr.reduce((total, el) => total + parseFloat(el), 0).toFixed(2);
+    }
 }
