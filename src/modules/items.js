@@ -5,7 +5,8 @@ export default class Item {
         this.imported = imported;
         this.basic_applies = basic_applies;
         this.quantity = quantity;
-        this.total = this.calculate_taxes(raw_price);
+        this.taxes = this.calculate_taxes(raw_price);
+        this.total = (raw_price + this.taxes).toFixed(2);
     }
 
     repr() {
@@ -35,10 +36,11 @@ export default class Item {
     calculate_taxes(raw_price) {
         const basic_tax = .1;
         const import_tax = .05;
+        const total_tax = basic_tax*this.basic_applies + import_tax*this.imported;
         const precision = .05;
         const rounding = 1.0 / precision;
-        const total = raw_price * (1 + basic_tax*this.basic_applies + import_tax*this.imported);
+        const total = raw_price * total_tax;
         const corrected_total = Math.round(total * 100) / 100; // corrects bad binary to decimal rounding efforts
-        return (Math.ceil(corrected_total * rounding) / rounding).toFixed(2);
+        return Math.ceil(corrected_total * rounding) / rounding;
     }
 }
