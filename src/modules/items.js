@@ -31,4 +31,14 @@ export default class Item {
         ];
         return 1 - no_basic_tax_products.some((product) => name.includes(product));
     }
+
+    calculate_taxes(raw_price) {
+        const basic_tax = .1;
+        const import_tax = .05;
+        const precision = .05;
+        const rounding = 1.0 / precision;
+        const total = raw_price * (1 + basic_tax*this.basic_applies + import_tax*this.imported);
+        const corrected_total = Math.round(total * 100) / 100; // corrects bad binary to decimal rounding efforts
+        return (Math.ceil(corrected_total * rounding) / rounding).toFixed(2);
+    }
 }
