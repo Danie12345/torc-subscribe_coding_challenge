@@ -22,4 +22,13 @@ export default class Item {
         const raw_price = quantity * price;
         return { name, imported, basic_applies, quantity, raw_price };
     }
+
+    determine_type(name) {
+        const no_basic_tax_products = [
+            'chocolate', 'bar', 'apple', 'sandwich', 'food', 'drink',
+            'pills', 'band', 'aid', 'syringe', 'medicine',
+            'book', 'notebook'
+        ];
+        return 1 - no_basic_tax_products.some((product) => name.includes(product));
+    }
 }
